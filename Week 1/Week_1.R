@@ -1,16 +1,8 @@
-# Load required libraries and set Spotify credentials
-
-if(!exists("setspotify", mode="function")) source("./partials/util.R")
-setspotify()
-
-# Load required playlist
-
-pharrell_unfiltered <- get_playlist_audio_features('dantesean', '37LPgjZWSjykXkrhHYzPcR')
-pop2000 <- get_playlist_audio_features('11123270324', '2n8WeZO6kAku8y4FNpDEka')
-
-# Clean the Pharrell playlist for duplicates due to different album versions
-
-pharrell <- pharrell_unfiltered[!duplicated(pharrell_unfiltered$track_name), ]
+# Load required libraries, credentials and dataframes
+if(!exists("utilize", mode="function")){ 
+  source("./partials/util.R")
+  utilize()
+}
 
 # Summarise key patterns
 

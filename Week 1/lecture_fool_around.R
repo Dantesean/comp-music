@@ -16,9 +16,9 @@ Sys.setenv(SPOTIFY_CLIENT_SECRET = "24684514c966448b87e8809c1c5a4156")
 
 # Work with spotifyr. Note that playlists also require a username.
 
-# juditha <-
-#     get_track_audio_features(
-#         c('2M5b9YLAgFroqWzeaZf86e', '3DBKc4ioGnMQLlbGQcFDIO'))
+juditha <-
+    get_track_audio_features(
+        c('2M5b9YLAgFroqWzeaZf86e', '3DBKc4ioGnMQLlbGQcFDIO'))
 # alla <- get_album_tracks('7oI0E3DdTbD85rhMg19GSU')
 # gilberto <- get_artist_audio_features('gilberto gil')
 # disney <- get_playlist_audio_features('128899670', '5NtjgKz4doejP5HJtKXFcS')
