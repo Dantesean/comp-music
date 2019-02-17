@@ -8,14 +8,14 @@ Using this new column "release_dates", we can easily spot that 2 observations ar
 
 ## Graphs
 ### Neptunes Playlist
-[[https://github.com/dantesean/comp-music/blob/master/images/Week2_Pharrell_1.png]]
+![Pharrell Graph 1](https://github.com/dantesean/comp-music/blob/master/images/Week2_Pharrell_1.png)
 Plotting the Danceability on a year-to-year basis, we can see the danceability increasing in the first years, and more or less jumping between 0.7 and 0.75. An interesting fact one can find from the fact that colors are incorporated into the graph to represent the popularity, is that it's nicely spread over the years. The danceability index is scaled with 100 to better present the danceability index.
 
-[[https://github.com/dantesean/comp-music/blob/master/images/Week2_Pharrell_2.png]]
+![Pharrell Graph 2](https://github.com/dantesean/comp-music/blob/master/images/Week2_Pharrell_2.png)
 When reorderning the variable for popularity to range within the dataset, so that the popularity = 100 for the most popular song, there is no clear correlation between popularity and danceability (in this dataset). The points are everywhere. 
 
 ### Pop2000 Playlist
-[[https://github.com/dantesean/comp-music/blob/master/images/Week2_Pop2000_1.png]]
+![Pop20000 Graph 1](https://github.com/dantesean/comp-music/blob/master/images/Week2_Pop2000_1.png)
 The Pop2000 playlist makes it even clearer that there is no true correlation between danceability and popularity, as pre 2000 saw not danceable songs as really popular, but also after 2010 more danceable songs were popular. There might be a change here, and that change might be due to some influence by The Neptunes, but that is up for further analysis. 
 
-[[https://github.com/dantesean/comp-music/blob/master/images/Week2_Pop2000_2.png]]
+![Pop20000 Graph 2](https://github.com/dantesean/comp-music/blob/master/images/Week2_Pop2000_2.png)
