@@ -3,6 +3,7 @@ utilize <- function(){
   library(tidyverse)
   library(spotifyr)
   library(ggplot2)
+  library(anytime)
   if(!exists("get_release_date", mode="function")){ 
     source("./partials/get_release_date.R")
   }
@@ -39,6 +40,9 @@ utilize <- function(){
       pharrell$release_date[i] <- get_release_date(pharrell[i, ]$track_name, pharrell[i, ]$artist_name, pharrell[i, ]$album_name)
     }, error=function(e){})
   }
+  
+  pharrell$release_date <- anytime(pharrell$release_date)
+  pop2000$release_date <- anytime(pop2000$release_date)
   
   # Assign variables to global evironment
   assign("pop2000", pop2000 , envir = .GlobalEnv)
