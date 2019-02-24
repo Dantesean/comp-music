@@ -1,36 +1,105 @@
 ---
-title: "Computational Music: Week 4"
+title: "Computation Musciology: Week 8"
+author: "Dante van der Heijden"
+date: "20 February 2019"
 output: 
-  flexdashboard::flex_dashboard:
-    orientation: columns
-    vertical_layout: fill
+    flexdashboard::flex_dashboard:
+        storyboard: true
+        theme: lumen
 ---
 
-```{r setup, include=FALSE}
-library(flexdashboard)
+```{r}
+# Load required libraries, credentials and dataframes
+if(!exists("utilize", mode="function")){ 
+  source("./util.R")
+  utilize()
+}
+
 ```
 
-Column {data-width=650}
------------------------------------------------------------------------
+### The Neptunes Sound in Popular Music
 
-### Chart A
+To understand what role The Neptunes played in the rise of Hip-Hop and R&B-influenced music in the pop charts, a corpus consisting of 798 songs made by The Neptunes and later solo by Pharrell Williams (playlist by Dante van der Heijden) is analyzed and compared to other popular music in the 2000’s to see see where the music by The Neptunes fitted in popular music during the mid 2000’s, and how it may have shaped what is played on the radio since then. To address this comparison, the “2000 pop Hits” playlist by QuLa Khan is analyzed, containing 231 pop hits from 2000 - 2010.
+
+Background
+
+Pharrell Williams is most notably known for his recent works on the minions soundtrack (“Happy”) and the work he made with his band, N.E.R.D. Pharrell’s biggest success however, was during the mid 2000’s when he and his counterpart Chad Hugo produced hundreds of songs as “The Neptunes”. Starting off in 1992 with the US #2 Single “Rump Shaker” by Wreckx-N-Effect; the typical Neptunes style was first heard: rhythmical beats and a lot of danceability. This is also reflected by the Spotify data, giving the 1992 song a danceability index of 0.865. The typical four count start, which ended up being Pharrell’s musical signature, was first heard on the 1996 song “When Boy Meets Girl” by Total. The introduction of what would be regarded as “The Neptunes Sound” came when “Superthug” was released by “N.O.R.E.”: synthesizers, keyboard sampling and modules. Even more commercial success followed, with their first worldwide hit in 2001 with Britney Spears’ “I’m a Slave 4 U”. Pharrell Williams has always done some solo production work, but starting in 2010 with the original Despicable Me soundtrack Pharrell started to focus more on his solo career, with productions for artists like Frank Ocean, Kendrick Lamar, Tyga, Pusha T and Beyoncé. 
+
+Preliminary Findings
+
+When solely looking at the data, one figure immediately stands out: danceability. It’s mean is 0.735 with a standard error of 0.130. The energy is also really present, with a mean of 0.704 and a standard error of 0.152. It also shows that the songs produced by Pharrell and Chad are regarded as positive, with a mean valance of 0.651 (s.e. of 0.204). These three attributes for the Pop 2000 playlist show lower figures (s.e.’s in brackets): 0.652 (0.145), 0.712 (0.152), 0.572 (0.219). The energy attribute is the only attribute that scores higher in the Pop 2000 playlist. 
+
+When looking at the extreme values of the Neptunes playlist, Spotify seemed to have done a good job on indexing the danceability, energy and valance. The same holds for the Pop playlist. 
+
+
+### Graphs for Pharrell
 
 ```{r}
+# Filtering the data
+## For Pharrell
+pharrell_danceability_by_year <- pharrell %>%
+  mutate(year = format(release_date, "%Y")) %>%
+  group_by(year) %>% 
+  filter(year >= 1992) %>%
+  summarise(dance = mean(danceability)*100, pop = mean(track_popularity), songs = n())
 
+pharrell_danceability_popularity <- pharrell %>%
+  mutate(track_popularity = track_popularity/max(track_popularity)*100) %>% 
+  mutate(year = format(release_date, "%Y")) %>%
+  group_by(year) %>% filter(year >= 1992)
+
+## For Pop2000
+pop2000_danceability_by_year <- pop2000 %>%
+  mutate(year = format(release_date, "%Y")) %>%
+  group_by(year) %>%
+  summarise(dance = mean(danceability)*100, pop = mean(track_popularity), songs = n())
+
+pop2000_danceability_popularity <- pop2000 %>%
+  mutate(track_popularity = track_popularity/max(track_popularity)*100) %>% 
+  mutate(year = format(release_date, "%Y")) %>%
+  group_by(year) %>% filter(year >= 1992)
+
+## For Pharrell
+ggplot(pharrell_danceability_by_year, aes(year, dance, group=1)) +
+  geom_point(aes(size = songs, color = pop)) +
+  scale_color_distiller(palette = "Spectral") +
+  xlab("Year") +
+  ylab("Dancebility") +
+  labs(size="Amount of Songs", colour = "Popularity") +
+  scale_x_discrete(breaks = scales::pretty_breaks(n = 5))
+
+ggplot(pharrell_danceability_popularity, aes(danceability, track_popularity)) +
+  geom_point() +
+  geom_smooth(method=lm)
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
 
-### Chart B
+***
 
+Plotting the Danceability on a year-to-year basis, we can see the danceability increasing in the first years, and more or less jumping between 0.7 and 0.75. An interesting fact one can find from the fact that colors are incorporated into the graph to represent the popularity, is that it's nicely spread over the years. The danceability index is scaled with 100 to better present the danceability index.
+
+When reorderning the variable for popularity to range within the dataset, so that the popularity = 100 for the most popular song, there is no clear correlation between popularity and danceability (in this dataset). The points are everywhere. 
+
+### Graphs for Pop2000
 ```{r}
+## For Pop2000
+ggplot(pop2000_danceability_by_year, aes(year, dance, group=1)) +
+  geom_point(aes(size = songs, color = pop)) +
+  scale_color_distiller(palette = "Spectral") +
+  xlab("Year") +
+  ylab("Dancebility") +
+  labs(size="Amount of Songs", colour = "Popularity") +
+  scale_x_discrete(breaks = scales::pretty_breaks(n = 5))
 
+ggplot(pop2000_danceability_popularity, aes(danceability, track_popularity)) +
+  geom_point() +
+  geom_smooth(method=lm)
 ```
 
-### Chart C
 
-```{r}
+***
 
-```
+The Pop2000 playlist makes it even clearer that there is no true correlation between danceability and popularity, as pre 2000 saw not danceable songs as really popular, but also after 2010 more danceable songs were popular. There might be a change here, and that change might be due to some influence by The Neptunes, but that is up for further analysis. 
 
+### Conclusions
+I still have to think of something, but time constraints made me rush this assignment more or less..
